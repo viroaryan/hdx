@@ -1,0 +1,1786 @@
+/* ==========================================================================
+   HDX — Aman | Design system ("lil-boxes" color-blocked editorial theme)
+   §1 hero  #F4F1EC · §2 orange gradient #FF6B3D→#F0402B · §3 blush #F3DCD8
+   §4 sky   #45B4EE · §5 footer charcoal #1B1918 / cream #F2E5DC
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --cream: #f4f1ec;
+  --orange-1: #ff6b3d;
+  --orange-2: #f0402b;
+  --blush: #f3dcd8;
+  --blush-bar: #efd9d4;
+  --pink: #f27e9d;
+  --sky: #45b4ee;
+  --charcoal: #1b1918;
+  --cream-text: #f2e5dc;
+  --ink: #161412;
+  /* Accent red, darkened from #E8342A so red text passes 4.5:1 small-text AA
+     on every background it sits on: cream 5.33:1, blush 4.59:1, white 6.01:1.
+     (#C81E15, the first candidate, still failed blush at 4.39:1.) It also
+     lifts the back-top button to 6.01:1 for its white label. */
+  --red: #c31c11;
+  --cyan: #35c4e8;
+  --orange-note: #e8622a;
+  --grey-on-blush: #b9a29b;
+  --shadow-dark-red: #8f1d0e;
+
+  /* Fonts (next/font variables + system fallbacks) */
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-mega: var(--font-anton), "Anton", "Arial Narrow", Impact, sans-serif;
+  --font-body: var(--font-archivo), "Archivo", "Segoe UI", system-ui, sans-serif;
+  --font-hand: var(--font-caveat), "Caveat", "Segoe Script", cursive;
+  --font-mono: var(--font-mono-jb), "JetBrains Mono", ui-monospace, Consolas, monospace;
+
+  /* Rhythm */
+  --pad-x: clamp(20px, 4.5vw, 64px);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Reset & base
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--pink);
+  color: var(--ink);
+}
+
+/* Focus ring adapts to the section it sits in (light or dark) */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Layout -------------------------------------------------------------------- */
+
+.section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(88px, 12vh, 150px) var(--pad-x);
+  overflow: hidden;
+}
+
+/* Subtle dotted-grid texture on every section (a faint dot at an 18px
+   rhythm). Sits above the section background but below .section__inner
+   (z-index: 2), so text never gets speckled. Per-section tint via
+   --dot-color. */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-image: radial-gradient(var(--dot-color, rgba(22, 20, 18, 0.08)) 1.2px, transparent 1.5px);
+  background-size: 18px 18px;
+  pointer-events: none;
+}
+
+.hero {
+  --dot-color: rgba(22, 20, 18, 0.09);
+}
+
+.downbad {
+  --dot-color: rgba(255, 255, 255, 0.14);
+}
+
+.sauce {
+  --dot-color: rgba(22, 20, 18, 0.07);
+}
+
+.cases {
+  --dot-color: rgba(255, 255, 255, 0.16);
+}
+
+.footer {
+  --dot-color: rgba(242, 229, 220, 0.06);
+}
+
+.section__inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Type ---------------------------------------------------------------------- */
+
+.label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.71875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  display: block;
+  margin-bottom: clamp(18px, 3vh, 28px);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.display-1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.9rem, 9vw, 9rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+
+.display-2 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 6.5vw, 6rem);
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+
+.mega {
+  font-family: var(--font-mega);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(4.2rem, 17vw, 17rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+}
+
+.body-justified {
+  max-width: 62ch;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+  font-size: clamp(1rem, 1.35vw, 1.1875rem);
+  line-height: 1.75;
+}
+
+.note-hand {
+  font-family: var(--font-hand);
+  font-weight: 500;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  line-height: 1.15;
+}
+
+/* Reveal (armed only when JS is live — html.js set by inline script) */
+html.js .reveal:not(.in) {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 700ms var(--ease-out), transform 700ms var(--ease-out);
+  transition-delay: calc(var(--stagger, 0) * 70ms);
+}
+
+/* Hand-drawn arrows: stroke draws in when revealed */
+.draw-arrow path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.draw-arrow.drawn path {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 700ms var(--ease-out);
+}
+
+.draw-arrow.drawn path:nth-child(2) {
+  transition-delay: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .draw-arrow path {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+}
+
+/* Utilities ------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 10px 16px;
+  background: var(--charcoal);
+  color: var(--cream-text);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  transform: translateY(-64px);
+  opacity: 0;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   CSS 3D CUBE LOGO ("HDX")
+   ========================================================================== */
+
+.cube-logo {
+  width: 44px;
+  height: 44px;
+  perspective: 500px;
+  flex-shrink: 0;
+}
+
+.cube-logo__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: cubeSpin 14s linear infinite;
+}
+
+@keyframes cubeSpin {
+  from {
+    transform: rotateX(-14deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(-14deg) rotateY(360deg);
+  }
+}
+
+.cube-logo__face {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cube-logo__face--front {
+  transform: translateZ(22px);
+  background: linear-gradient(135deg, var(--orange-1), var(--orange-2));
+  color: var(--cream-text);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.cube-logo__face--back {
+  transform: rotateY(180deg) translateZ(22px);
+  background: var(--orange-note);
+}
+
+.cube-logo__face--right {
+  transform: rotateY(90deg) translateZ(22px);
+  background: var(--pink);
+}
+
+.cube-logo__face--left {
+  transform: rotateY(-90deg) translateZ(22px);
+  background: var(--sky);
+}
+
+.cube-logo__face--top {
+  transform: rotateX(90deg) translateZ(22px);
+  background: var(--charcoal);
+}
+
+.cube-logo__face--bottom {
+  transform: rotateX(-90deg) translateZ(22px);
+  background: var(--blush-bar);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cube-logo__inner {
+    animation: none;
+    transform: rotateX(-14deg) rotateY(24deg);
+  }
+}
+
+/* ==========================================================================
+   HERO (§1 — warm off-white)
+   ========================================================================== */
+
+.hero {
+  background: var(--cream);
+  overflow: visible;
+  padding-top: 0;
+  padding-bottom: clamp(48px, 8vh, 96px);
+}
+
+.hero__top {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-inline: calc(-1 * var(--pad-x));
+  padding: 16px var(--pad-x);
+  background: linear-gradient(180deg, var(--cream) 55%, rgba(244, 241, 236, 0));
+}
+
+.hero__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero__brand-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.12em;
+}
+
+.lets-talk {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 2px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.71875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.lets-talk__word {
+  display: inline-block;
+  /* Longest swap word "LET'S BUILD" is 11 mono chars, plus its inherited
+     0.2em letter-spacing on every character (11 × 0.2em = 2.2em). Reserving
+     exactly that keeps the sticky header link from resizing on each swap. */
+  min-width: calc(11ch + 2.2em);
+  animation: wordIn 320ms var(--ease-out);
+}
+
+@keyframes wordIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lets-talk__word {
+    animation: none;
+  }
+}
+
+.hero__center {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__tagline {
+  color: var(--red);
+  margin-bottom: clamp(20px, 3.5vh, 36px);
+}
+
+/* No max-width here: the h1 has no font-size of its own, so any em-based
+   width would resolve against the UA h1 size (2em) and wrap the giant
+   .display-1 span one word per line. Line breaks come from the explicit
+   <br>s in Hero.tsx; the h1 shrink-wraps the span. */
+.hero__headline {
+  position: relative;
+  display: inline-block;
+}
+
+/* Soft pink highlight bar sitting behind the headline lines. It lives inside
+   the .display-1 span so the em units resolve against the giant type size;
+   z-index -1 keeps it behind the glyphs but inside the span's stacking
+   context (so it never slips behind the section background). */
+.hero__bar {
+  position: absolute;
+  left: -8%;
+  right: -4%;
+  top: 1.35em;
+  height: 1.02em;
+  z-index: -1;
+  background: var(--blush-bar);
+  border-radius: 999px;
+  transform: rotate(-1.2deg);
+}
+
+.hero__headline .display-1 {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__intro {
+  margin-top: clamp(24px, 4vh, 44px);
+  max-width: 560px;
+  color: rgba(22, 20, 18, 0.72);
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1.7;
+}
+
+.hero__arrows {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(48px, 8vw, 120px);
+  margin-top: clamp(28px, 6vh, 64px);
+  color: var(--red);
+}
+
+.hero__arrow-a {
+  width: clamp(64px, 8vw, 104px);
+  transform: rotate(14deg);
+}
+
+.hero__arrow-b {
+  width: clamp(48px, 6vw, 80px);
+  transform: rotate(-10deg) scaleX(-1);
+}
+
+/* ==========================================================================
+   DOWN BAD (§2 — orange gradient)
+   ========================================================================== */
+
+.downbad {
+  background: linear-gradient(135deg, var(--orange-1) 0%, var(--orange-2) 100%);
+  color: #fff;
+}
+
+.downbad .eyebrow {
+  /* Was white @ 0.85 — 2.42:1 on orange-1 (needs 4.5:1 for small text).
+     Charcoal on orange-1 is 6.19:1. */
+  color: var(--charcoal);
+}
+
+.downbad__mega {
+  color: #fff;
+  text-shadow: 0.045em 0.06em 0 var(--shadow-dark-red);
+}
+
+.downbad__help {
+  margin-top: clamp(14px, 2.5vh, 28px);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(2rem, 5.5vw, 4.5rem);
+  line-height: 1.05;
+}
+
+.downbad__body {
+  margin-top: clamp(20px, 3.5vh, 34px);
+  /* Was white @ 0.92 — 2.60:1 on orange-1, 2.93:1 at the t=0.4 gradient
+     midpoint, 3.46:1 on orange-2; at ~18-19px it is small text needing 4.5:1,
+     and no light color can pass on this gradient. Ink passes everywhere:
+     6.49 / 5.73 / 4.79. */
+  color: var(--ink);
+}
+
+.downbad__grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: clamp(40px, 6vw, 90px);
+  align-items: center;
+}
+
+/* Browser mockup ----------------------------------------------------------- */
+
+/* Centering lives on the Reveal wrapper — it is the actual grid item, not
+   .mockup-wrap (see DownBad.tsx) — so justify-self on .mockup-wrap is dead
+   code and has been removed. */
+.downbad__mockup {
+  display: flex;
+  justify-content: center;
+}
+
+.mockup-wrap {
+  position: relative;
+  width: min(100%, 480px);
+}
+
+.mockup {
+  --py: 0px;
+  transform: rotate(-7deg) translateY(var(--py));
+  will-change: transform;
+  background: #fff;
+  color: var(--ink);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px -18px rgba(74, 12, 2, 0.55), 0 6px 18px rgba(74, 12, 2, 0.25);
+}
+
+.mockup__chrome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--cream);
+  border-bottom: 1px solid rgba(22, 20, 18, 0.1);
+}
+
+.mockup__dots {
+  display: flex;
+  gap: 5px;
+}
+
+.mockup__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.mockup__dot--r {
+  background: #f2635a;
+}
+
+.mockup__dot--y {
+  background: #f5bd4f;
+}
+
+.mockup__dot--g {
+  background: #56c271;
+}
+
+.mockup__url {
+  flex: 1;
+  background: #fff;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.06em;
+  color: rgba(22, 20, 18, 0.55);
+}
+
+.mockup__body {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  min-height: 240px;
+}
+
+.mockup__side {
+  background: var(--charcoal);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mockup__side-logo {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, var(--orange-1), var(--orange-2));
+  margin-bottom: 6px;
+}
+
+.mockup__side-item {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(242, 229, 220, 0.28);
+}
+
+.mockup__side-item--on {
+  background: var(--orange-1);
+}
+
+.mockup__main {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mockup__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.mockup__card {
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mockup__card-line {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(22, 20, 18, 0.16);
+}
+
+.mockup__card-num {
+  height: 9px;
+  width: 60%;
+  border-radius: 3px;
+  background: var(--ink);
+  opacity: 0.85;
+}
+
+.mockup__chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 76px;
+  background: var(--cream);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.mockup__bar {
+  flex: 1;
+  border-radius: 4px 4px 2px 2px;
+  background: linear-gradient(180deg, var(--orange-1), var(--orange-2));
+  transform-origin: bottom;
+}
+
+.mockup__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.mockup__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mockup__status {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.mockup__status--ok {
+  background: #3fae6a;
+}
+
+.mockup__status--warn {
+  background: #f5a623;
+}
+
+.mockup__row-line {
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(22, 20, 18, 0.14);
+  flex: 1;
+}
+
+/* Handwritten annotation + arrow. Ink, not cyan: cyan on orange-2 is 1.87:1;
+   ink is 4.79:1 on orange-2 and 6.5:1 on orange-1 (4.5:1 needed). The arrow
+   follows the note's color so the annotation reads as one element. */
+.mockup-note {
+  position: absolute;
+  top: -0.9em;
+  right: -4%;
+  z-index: 2;
+  color: var(--ink);
+  transform: rotate(4deg);
+  text-shadow: 0 1px 0 rgba(74, 12, 2, 0.25);
+}
+
+.mockup-note-arrow {
+  position: absolute;
+  right: 12%;
+  top: -34px;
+  width: 64px;
+  color: var(--ink);
+  transform: rotate(196deg);
+}
+
+/* ==========================================================================
+   SECRET SAUCE (§3 — blush pink)
+   ========================================================================== */
+
+.sauce {
+  background: var(--blush);
+}
+
+.sauce .eyebrow {
+  color: var(--red);
+}
+
+.sauce__inner {
+  padding-right: clamp(0px, 16vw, 280px);
+}
+
+.sauce__body {
+  margin-top: clamp(20px, 3.5vh, 36px);
+  color: rgba(22, 20, 18, 0.82);
+}
+
+/* Vertical infinite marquee along the right edge. Two mask layers composited
+   with "intersect": the vertical fade from before, plus a horizontal fade on
+   the right edge so bleeding words fade out instead of being hard-clipped
+   mid-letter. */
+.sauce__marquee {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: clamp(120px, 17vw, 300px);
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(90deg, #000 58%, transparent 98%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(180deg, transparent, #000 18%, #000 82%, transparent),
+    linear-gradient(90deg, #000 58%, transparent 98%);
+  mask-composite: intersect;
+}
+
+.sauce__track {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  animation: marqueeY 30s linear infinite;
+}
+
+@keyframes marqueeY {
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.sauce__word {
+  display: inline-flex;
+  align-items: baseline;
+  white-space: nowrap;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.6rem, 5vw, 4.8rem);
+  line-height: 1.35;
+  color: var(--grey-on-blush);
+}
+
+.sauce__star {
+  color: var(--pink);
+  margin-right: 0.18em;
+  font-size: 0.8em;
+}
+
+/* "But that's just the beginning..." */
+.sauce__more {
+  margin-top: clamp(40px, 7vh, 80px);
+}
+
+.sauce__more-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.15;
+}
+
+.sauce__more-body {
+  margin-top: 14px;
+  max-width: 60ch;
+  color: rgba(22, 20, 18, 0.78);
+}
+
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 5vw, 72px);
+  margin-top: clamp(28px, 5vh, 52px);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat__value {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3.2vw, 3rem);
+  line-height: 1;
+}
+
+.stat__label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.65625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  /* Was ink @ 0.55 — 3.76:1 on blush (needs 4.5:1). 0.75 blends to 7.05:1. */
+  color: rgba(22, 20, 18, 0.75);
+}
+
+/* ==========================================================================
+   CASE STUDIES (§4 — sky blue)
+   ========================================================================== */
+
+.cases {
+  background: var(--sky);
+}
+
+.cases .eyebrow {
+  /* Was #fff — 2.33:1 on sky (needs 4.5:1 for small text). Ink is 7.89:1. */
+  color: var(--ink);
+}
+
+.cases__title {
+  color: var(--ink);
+  margin-bottom: clamp(28px, 5vh, 64px);
+}
+
+.cases__list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.case-link {
+  position: relative;
+  display: inline-block;
+  /* Was cream-text — 1.89:1 on sky, below even the 3:1 large-text minimum.
+     No light color can pass on sky (white is 2.33:1), so the giant serif
+     lines use ink: 7.89:1. */
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  /* Sized so the longest name ("GreenSMP & GREENSync Plugin", ~16.2em wide in
+     Playfair 600) plus its stagger margin fits inside the 1240px section
+     inner at every viewport ≥640px — the previous 7vw/6.4rem overflowed the
+     section by ~350px at 1440×900 and was clipped mid-word. */
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  padding-right: 0.2em;
+}
+
+.cases__list li:nth-child(2) .case-link {
+  margin-left: clamp(0px, 6vw, 90px);
+  margin-top: -0.14em;
+}
+
+.cases__list li:nth-child(3) .case-link {
+  margin-left: clamp(0px, 2.5vw, 40px);
+  margin-top: -0.16em;
+}
+
+.cases__list li:nth-child(4) .case-link {
+  margin-left: clamp(0px, 9vw, 140px);
+  margin-top: -0.16em;
+}
+
+/* Soft highlight sweep on hover */
+.case-link::before {
+  content: "";
+  position: absolute;
+  inset: 6% -2% 4% -4%;
+  z-index: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.38) 30%, rgba(255, 255, 255, 0.38) 70%, rgba(255, 255, 255, 0));
+  transform: translateX(-104%);
+  transition: transform 480ms var(--ease-out);
+  pointer-events: none;
+}
+
+.case-link:hover::before,
+.case-link:focus-visible::before {
+  transform: translateX(0);
+}
+
+.case-link__text {
+  position: relative;
+  z-index: 1;
+}
+
+.case-link__status {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.35em;
+  padding: 0.28em 0.75em;
+  border-radius: 999px;
+  background: var(--charcoal);
+  color: var(--cream-text);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: clamp(0.5625rem, 0.9vw, 0.75rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
+}
+
+.case-link:hover .case-link__status,
+.case-link:focus-visible .case-link__status {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 2×2 compact cards */
+.cases__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+  margin-top: clamp(40px, 7vh, 80px);
+  max-width: 980px;
+}
+
+.case-card {
+  background: #fff;
+  color: var(--ink);
+  border-radius: 14px;
+  padding: clamp(12px, 1.6vw, 18px);
+  box-shadow: 0 12px 32px -14px rgba(11, 59, 90, 0.45);
+  transition: transform 350ms var(--ease-out), box-shadow 350ms var(--ease-out);
+}
+
+.case-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 44px -16px rgba(11, 59, 90, 0.55);
+}
+
+/* Preview panel — halftone-dotted backdrop with a mini browser window,
+   in the spirit of the reference's project screenshots. */
+.case-card__preview {
+  display: block;
+  border-radius: 10px;
+  padding: clamp(14px, 2vw, 22px) clamp(14px, 2.4vw, 28px) 0;
+  background-color: #7fc4ee;
+  background-image: radial-gradient(rgba(21, 84, 133, 0.38) 1.1px, transparent 1.3px);
+  background-size: 9px 9px;
+  overflow: hidden;
+  transition: background-color 350ms var(--ease-out);
+}
+
+.case-card__preview:hover {
+  background-color: #8fcdf2;
+}
+
+.case-card__window {
+  display: block;
+  background: #fff;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 10px 26px -12px rgba(10, 40, 64, 0.5);
+  overflow: hidden;
+}
+
+.case-card__chrome {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  background: #eef2f5;
+  border-bottom: 1px solid rgba(22, 20, 18, 0.08);
+}
+
+.case-card__chrome i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(22, 20, 18, 0.22);
+}
+
+.case-card__chrome i:first-child {
+  background: #f26d5f;
+}
+
+.case-card__chrome i:nth-child(2) {
+  background: #f2b23e;
+}
+
+.case-card__chrome i:nth-child(3) {
+  background: #4fc06a;
+}
+
+/* Title row: name left, Code pill right. */
+.case-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: clamp(12px, 1.6vw, 16px) clamp(4px, 0.6vw, 6px) 0;
+}
+
+.case-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 5px 13px;
+  border: 1px solid rgba(22, 20, 18, 0.28);
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.75rem;
+  color: var(--ink);
+  transition: background-color 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+.case-card__btn:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.case-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.case-card__status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.case-card__name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.1875rem;
+  line-height: 1.25;
+  margin-bottom: 4px;
+}
+
+.case-card__summary {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgba(22, 20, 18, 0.72);
+  margin-bottom: 12px;
+  padding-inline: clamp(4px, 0.6vw, 6px);
+}
+
+.case-card__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-inline: clamp(4px, 0.6vw, 6px);
+  padding-bottom: 4px;
+}
+
+.case-card__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 4px;
+  border: 1px solid rgba(22, 20, 18, 0.18);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.59375rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  color: rgba(22, 20, 18, 0.78);
+  white-space: nowrap;
+}
+
+/* Brand-colored technology tile inside a chip. */
+.ticon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 5px;
+  flex: none;
+  overflow: hidden;
+}
+
+.ticon svg {
+  width: 12px;
+  height: 12px;
+  display: block;
+}
+
+.ticon__label {
+  font-family: var(--font-archivo), sans-serif;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+/* "See all projects" pill under the grid. */
+.cases__more {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 5vh, 48px);
+}
+
+.cases__all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  transition: transform 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
+}
+
+.cases__all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -12px rgba(10, 30, 50, 0.6);
+}
+
+/* ---------------------------------------------------------------------------
+   Abstract per-project browser screenshots (pure CSS, no images).
+   --------------------------------------------------------------------------- */
+.shot {
+  display: block;
+  position: relative;
+  height: clamp(120px, 16vw, 170px);
+  padding: 10px 12px 0;
+  overflow: hidden;
+}
+
+.shot__body {
+  display: flex;
+  gap: 8px;
+  height: 100%;
+}
+
+.shot__side {
+  flex: none;
+  width: 26px;
+  border-radius: 5px 5px 0 0;
+  background: rgba(22, 20, 18, 0.82);
+}
+
+.shot__main {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 1;
+  min-width: 0;
+}
+
+.shot__row {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.shot__meter {
+  height: 10px;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.16);
+  position: relative;
+  overflow: hidden;
+}
+
+.shot__meter::after {
+  content: "";
+  position: absolute;
+  inset: 0 55% 0 0;
+  border-radius: 5px;
+  background: #3ddc84;
+}
+
+.shot--device-inspector {
+  background: linear-gradient(160deg, #23282e, #14171b);
+}
+
+.shot__stats {
+  display: flex;
+  gap: 7px;
+}
+
+.shot__stat {
+  flex: 1;
+  height: 26px;
+  border-radius: 5px;
+  background: #f3f0ec;
+  position: relative;
+}
+
+.shot__stat::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  right: 40%;
+  top: 9px;
+  height: 7px;
+  border-radius: 3px;
+  background: #f0402b;
+  opacity: 0.85;
+}
+
+.shot__chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  flex: 1;
+  padding-bottom: 2px;
+}
+
+.shot__chart i {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, #ff6b3d, #f0402b);
+}
+
+.shot--cloud-dashboard {
+  background: linear-gradient(160deg, #f7f5f1, #e9e4dc);
+}
+
+.shot__banner {
+  height: 34px;
+  border-radius: 5px 5px 0 0;
+  background: linear-gradient(120deg, #3f9e52, #2c7a3d);
+}
+
+.shot__player {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.shot__player i {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: linear-gradient(140deg, #8fd08a, #4c9f4a);
+}
+
+.shot__player span {
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(22, 60, 30, 0.4);
+}
+
+.shot--greensmp {
+  background: linear-gradient(160deg, #eef6ea, #dceeda);
+}
+
+.shot__headline {
+  height: 13px;
+  border-radius: 6px;
+  background: rgba(22, 20, 18, 0.78);
+}
+
+.shot__cards {
+  display: flex;
+  gap: 7px;
+  margin-top: auto;
+  padding-bottom: 2px;
+}
+
+.shot__cards span {
+  flex: 1;
+  height: 34px;
+  border-radius: 6px 6px 0 0;
+  background: #fff;
+  border: 1px solid rgba(22, 20, 18, 0.1);
+  border-bottom: none;
+}
+
+.shot--minerift {
+  background: linear-gradient(160deg, #fffdf9, #efe9df);
+}
+
+/* ==========================================================================
+   FOOTER / CONTACT (§5 — charcoal, cream)
+   ========================================================================== */
+
+.footer {
+  background: var(--charcoal);
+  color: var(--cream-text);
+  /* Reserve room for the giant cropped background name so it can never slide
+     under the same-colored form: its visible height above the section bottom
+     is 1.6em of type (two 0.8 line-height lines) minus the 24% bottom crop,
+     ≈ 1.22× the giant font-size — padded to 1.3× for Anton's tall ascent. */
+  padding-bottom: calc(clamp(7rem, 24vw, 26rem) * 1.3);
+}
+
+.footer__giant {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%) translateY(24%);
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-mega);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(7rem, 24vw, 26rem);
+  line-height: 0.8;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--cream-text);
+}
+
+.footer__giant span {
+  display: block;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(230px, 320px) minmax(300px, 430px);
+  justify-content: space-between;
+  gap: clamp(40px, 6vw, 96px);
+}
+
+.footer__col {
+  position: relative;
+  z-index: 1;
+}
+
+.footer__kicker {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(1.05rem, 1.6vw, 1.375rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+
+.footer__mono {
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 229, 220, 0.6);
+}
+
+.footer__socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(24px, 4vh, 40px);
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid rgba(242, 229, 220, 0.4);
+  border-radius: 13px;
+  color: var(--cream-text);
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms var(--ease-out);
+}
+
+.social-btn:hover,
+.social-btn:focus-visible {
+  background: var(--cream-text);
+  color: var(--charcoal);
+  transform: translateY(-3px);
+}
+
+/* Handwritten note + arrow pointing at the Send button */
+.footer__note {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: clamp(18px, 3vh, 30px);
+  color: var(--orange-note);
+  transform: rotate(-3deg);
+}
+
+.footer__note-text {
+  max-width: 15em;
+}
+
+.footer__note-arrow {
+  width: 58px;
+  margin-top: 0.5em;
+  /* The arrow's tip points right by default (DrawnArrow.tsx path ends at
+     x=91, y=36). Rotated 115deg the tail curls from the note text and the tip
+     points down-left at the Send button at the bottom of the form column —
+     the previous rotate(84deg) scaleX(-1) sent it curling up into empty
+     space. Same downward-pointing family as .mockup-note-arrow (196deg). */
+  transform: rotate(115deg);
+  flex-shrink: 0;
+}
+
+/* Form ---------------------------------------------------------------------- */
+
+.form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 3vh, 26px);
+}
+
+.form__field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.65625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 229, 220, 0.55);
+  margin-bottom: 4px;
+}
+
+.form__input {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(242, 229, 220, 0.35);
+  border-radius: 0;
+  padding: 10px 0;
+  color: var(--cream-text);
+  font-family: var(--font-serif);
+  font-size: 1.0625rem;
+  line-height: 1.4;
+  transition: border-color 200ms ease;
+}
+
+.form__input::placeholder {
+  /* Was 0.38 alpha — 3.12:1 on charcoal (needs 4.5:1). 0.55 blends to 5.1:1,
+     matching the labels. */
+  color: rgba(242, 229, 220, 0.55);
+  font-style: italic;
+}
+
+.form__input:focus-visible {
+  border-bottom-color: var(--cream-text);
+}
+
+textarea.form__input {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.form__send {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--cream-text);
+  color: var(--charcoal);
+  border-radius: 999px;
+  padding: 16px 44px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  transition: transform 240ms var(--ease-out), box-shadow 240ms var(--ease-out);
+}
+
+.form__send:hover,
+.form__send:focus-visible {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 34px -12px rgba(242, 229, 220, 0.4);
+}
+
+/* Bottom bar */
+
+.footer__bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: clamp(48px, 8vh, 96px);
+  padding-block: 22px;
+  border-top: 1px solid rgba(242, 229, 220, 0.18);
+}
+
+.footer__legal {
+  font-family: var(--font-mono);
+  font-size: 0.71875rem;
+  letter-spacing: 0.06em;
+  color: rgba(242, 229, 220, 0.62);
+}
+
+.footer__links {
+  display: flex;
+  gap: clamp(16px, 2.5vw, 28px);
+}
+
+.footer__link {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.71875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 229, 220, 0.75);
+  transition: color 180ms ease;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: var(--cream-text);
+}
+
+/* ==========================================================================
+   BACK TO TOP (floating red button)
+   ========================================================================== */
+
+.back-top {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 90;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 12px 28px -8px rgba(232, 52, 42, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 240ms ease, transform 240ms var(--ease-out), visibility 0s linear 240ms;
+}
+
+.back-top--show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 240ms ease, transform 240ms var(--ease-out);
+}
+
+.back-top:hover,
+.back-top:focus-visible {
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .sauce__track {
+    animation: none;
+  }
+
+  .mockup {
+    transform: rotate(-7deg);
+  }
+
+  .reveal {
+    transition: none;
+  }
+
+  html.js .reveal:not(.in) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE (320px → 4K; giant type already clamps)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .downbad__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mockup-wrap {
+    margin-top: clamp(40px, 6vh, 64px);
+  }
+
+  .sauce__inner {
+    padding-right: clamp(96px, 20vw, 220px);
+  }
+}
+
+@media (max-width: 860px) {
+  .footer {
+    /* Smaller giant (clamp(6rem, 30vw, 14rem)) with a 30% bottom crop:
+       visible height ≈ 1.12× the font-size, padded to 1.25×. */
+    padding-bottom: calc(clamp(6rem, 30vw, 14rem) * 1.25);
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr;
+    gap: clamp(48px, 8vh, 72px);
+  }
+
+  .footer__giant {
+    font-size: clamp(6rem, 30vw, 14rem);
+    transform: translateX(-50%) translateY(30%);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__top {
+    margin-inline: calc(-1 * var(--pad-x));
+  }
+
+  /* .lets-talk__word keeps its calc(11ch + 2.2em) min-width here too — the
+     reserved width (~101px) still fits the 320px header row alongside the
+     brand, and zeroing it made the word swap resize the sticky link. */
+
+  .body-justified {
+    text-align: left;
+  }
+
+  .downbad__grid {
+    gap: 32px;
+  }
+
+  .mockup-wrap {
+    width: min(100%, 400px);
+  }
+
+  .mockup-note {
+    right: 0;
+  }
+
+  .sauce__marquee {
+    width: clamp(80px, 24vw, 120px);
+  }
+
+  .sauce__inner {
+    padding-right: clamp(72px, 26vw, 130px);
+  }
+
+  .cases__list {
+    align-items: stretch;
+  }
+
+  .case-link {
+    white-space: normal;
+    font-size: clamp(2rem, 9.5vw, 3.4rem);
+    margin-left: 0 !important;
+    margin-top: 0.12em !important;
+  }
+
+  .case-link__status {
+    display: none;
+  }
+
+  .cases__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-row {
+    gap: 20px 32px;
+  }
+
+  .hero__arrows {
+    gap: 40px;
+  }
+}
