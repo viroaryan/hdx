@@ -38,7 +38,7 @@ export default function FooterContact() {
                 key={social.key}
                 className="social-btn"
                 href={social.href}
-                aria-label={social.label}
+                aria-label={social.external ? `${social.label} (opens in a new tab)` : social.label}
                 {...(social.external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : undefined)}
@@ -63,7 +63,7 @@ export default function FooterContact() {
       <div className="section__inner footer__bottom">
         <p className="footer__legal">{FOOTER_LEGAL}</p>
         <nav className="footer__links" aria-label="Footer links">
-          <a className="footer__link" href="https://github.com/hdxpyy" target="_blank" rel="noopener noreferrer">
+          <a className="footer__link" href="https://github.com/hdxpyy" target="_blank" rel="noopener noreferrer" aria-label="GitHub (opens in a new tab)">
             GitHub
           </a>
           <a
@@ -71,6 +71,7 @@ export default function FooterContact() {
             href="https://www.linkedin.com/in/hdx-aman-3b2505434/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn (opens in a new tab)"
           >
             LinkedIn
           </a>
@@ -79,6 +80,7 @@ export default function FooterContact() {
             href="https://www.instagram.com/hdx.py/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Instagram (opens in a new tab)"
           >
             Instagram
           </a>

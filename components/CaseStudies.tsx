@@ -97,7 +97,7 @@ export default function CaseStudies() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="case-link"
-                  aria-label={`${project.name} — ${project.status} (opens GitHub profile in a new tab)`}
+                  aria-label={`${project.name} — ${project.status} (opens in a new tab)`}
                 >
                   <span className="case-link__text">{project.name}</span>
                   <span className="case-link__status">{project.status}</span>
@@ -116,7 +116,7 @@ export default function CaseStudies() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="case-card__preview"
-                  aria-label={`Open ${project.name} on GitHub`}
+                  aria-label={`Open ${project.name} on GitHub (opens in a new tab)`}
                 >
                   <span className="case-card__window">
                     <span className="case-card__chrome" aria-hidden="true">
@@ -134,6 +134,7 @@ export default function CaseStudies() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="case-card__btn"
+                    aria-label={`View code for ${project.name} on GitHub (opens in a new tab)`}
                   >
                     <GitHubIcon size={13} />
                     Code
@@ -161,6 +162,7 @@ export default function CaseStudies() {
               target="_blank"
               rel="noopener noreferrer"
               className="cases__all-btn"
+              aria-label="See all projects on GitHub (opens in a new tab)"
             >
               See all projects
               <ArrowRightIcon size={14} />
