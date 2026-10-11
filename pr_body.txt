@@ -1,0 +1,4 @@
+💡 What: Added explicit "(opens in a new tab)" text to `aria-label` attributes for external links (`target="_blank"`).
+🎯 Why: Screen reader users often find it disorienting when a link opens a new tab or window unexpectedly. Communicating this clearly beforehand improves the accessibility and overall experience.
+📸 Before/After: Visuals remain unchanged. Screen reader text has been updated.
+♿ Accessibility: Ensures WCAG compliance regarding unpredictable changes in context by explicitly informing users when external links open in a new tab.
